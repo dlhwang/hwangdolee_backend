@@ -1,5 +1,8 @@
 package com.dollee.bank.account.domain.model;
 
+import lombok.Getter;
+
+@Getter
 public class AccountNumber {
   private final String value;
 
@@ -11,7 +14,4 @@ public class AccountNumber {
     return new AccountNumber(value);
   }
 
-  public String getValue() {
-    return value;
-  }
 }
