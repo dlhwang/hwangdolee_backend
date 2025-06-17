@@ -2,3 +2,7 @@ rootProject.name = 'DolleeBank'
 
 include 'account'
 include 'common'
+include 'deposit'
+include 'withdraw'
+include 'transfer'
+include 'account-core'
