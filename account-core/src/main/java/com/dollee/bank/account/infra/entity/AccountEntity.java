@@ -1,7 +1,10 @@
 package com.dollee.bank.account.infra.entity;
 
+import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.common.util.Ulid;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,28 +19,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AccountEntity {
-    @Id
-    @Ulid
-    @Column(name = "account_id", columnDefinition = "varchar(500)", nullable = false)
-    private String id;
 
-    @Column(name = "account_number", nullable = false, unique = true)
-    private String accountNumber;
+  @Id
+  @Ulid
+  @Column(name = "account_id", columnDefinition = "varchar(500)", nullable = false)
+  private String id;
 
-    @Column(name = "balance", nullable = false)
-    private long balance = 0;
+  @Embedded
+  @AttributeOverride(name = "value", column = @Column(name = "account_number", nullable = false, unique = true))
+  private AccountNumber accountNumber;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+  @Column(name = "balance", nullable = false)
+  private long balance = 0;
 
-    protected AccountEntity(String accountNumber, long balance, String userId) {
-        this.accountNumber = accountNumber;
-        this.balance = balance;
-        this.userId = userId;
-    }
+  @Column(name = "user_id", nullable = false)
+  private String userId;
 
-    public static AccountEntity newInstance(String accountNumber, long balance, String userId){
-        return new AccountEntity(accountNumber, balance, userId);
-    }
+  protected AccountEntity(AccountNumber accountNumber, long balance, String userId) {
+    this.accountNumber = accountNumber;
+    this.balance = balance;
+    this.userId = userId;
+  }
+
+  public static AccountEntity newInstance(AccountNumber accountNumber, long balance, String userId) {
+    return new AccountEntity(accountNumber, balance, userId);
+  }
 
 }

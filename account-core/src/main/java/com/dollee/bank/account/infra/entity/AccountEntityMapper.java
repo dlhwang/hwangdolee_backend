@@ -8,7 +8,7 @@ public class AccountEntityMapper {
   public static AccountEntity toEntity(Account domain) {
     return new AccountEntity(
         domain.getAccountId(),
-        domain.getAccountNumberToString(),
+        domain.getAccountDetail().getAccountNumber(),
         domain.getAmount(),
         domain.getUserId()
     );
@@ -16,7 +16,7 @@ public class AccountEntityMapper {
 
   public static AccountEntity toEntityForSave(Account domain) {
     return new AccountEntity(
-        domain.getAccountNumberToString(),
+        domain.getAccountNumber(),
         domain.getAmount(),
         domain.getUserId()
     );
@@ -25,7 +25,7 @@ public class AccountEntityMapper {
   public static Account toDomain(AccountEntity entity) {
     return Account.of(
         entity.getId(),
-        AccountNumber.to(entity.getAccountNumber()),
+        entity.getAccountNumber(),
         Money.wons(entity.getBalance()),
         entity.getUserId()
     );

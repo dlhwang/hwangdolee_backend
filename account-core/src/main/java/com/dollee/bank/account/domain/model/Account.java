@@ -10,38 +10,44 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Account {
-    private String accountId;
-    private AccountNumber accountNumber;
-    private Money balance;
-    private String userId;
 
-    public static Account newInstance(AccountNumber accountNumber, Money balance, String userId){
-        return new Account(accountNumber, balance, userId);
-    }
+  private String accountId;
+  private AccountDetail accountDetail;
 
-    public static Account of(String accountId, AccountNumber accountNumber, Money balance, String userId){
-        return new Account(accountId, accountNumber, balance, userId);
-    }
+  public static Account newInstance(AccountNumber accountNumber, Money balance, String userId) {
+    return new Account(accountNumber, balance, userId);
+  }
 
-    protected Account(AccountNumber accountNumber, Money balance, String userId) {
-        this.balance = balance;
-        this.accountNumber = accountNumber;
-        this.userId = userId;
-    }
+  public static Account of(String accountId, AccountNumber accountNumber, Money balance,
+      String userId) {
+    return new Account(accountId, AccountDetail.newInstance(accountNumber, balance.longValue(), userId));
+  }
 
-    public void increaseBalance(Money amount) {
-        this.balance = this.balance.plus(amount);
-    }
+  protected Account(AccountNumber accountNumber, Money balance, String userId) {
+    this.accountDetail = AccountDetail.newInstance(accountNumber, balance.longValue(), userId);
+  }
 
-    public void decreaseBalance(Money amount) {
-        this.balance = this.balance.minus(amount);
-    }
+  public void increaseBalance(Money amount) {
+    this.accountDetail = AccountDetail.increaseBalance(accountDetail, amount);
+  }
 
-    public long getAmount(){
-        return balance.getAmount().longValue();
-    }
+  public void decreaseBalance(Money amount) {
+    this.accountDetail = AccountDetail.decreaseBalance(accountDetail, amount);
+  }
 
-    public String getAccountNumberToString(){
-        return accountNumber.getValue();
-    }
+  public long getAmount() {
+    return accountDetail.getAmount();
+  }
+
+  public AccountNumber getAccountNumber() {
+    return accountDetail.getAccountNumber();
+  }
+
+  public String getUserId(){
+    return this.accountDetail.getUserId();
+  }
+
+  public String getAccountNumberToString() {
+    return accountDetail.getAccountNumberToString();
+  }
 }
