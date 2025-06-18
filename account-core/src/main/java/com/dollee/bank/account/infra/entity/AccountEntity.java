@@ -33,6 +33,7 @@ public class AccountEntity {
     protected AccountEntity(String accountNumber, long balance, String userId) {
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.userId = userId;
     }
 
     public static AccountEntity newInstance(String accountNumber, long balance, String userId){

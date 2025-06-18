@@ -34,12 +34,11 @@ public class AccountService {
   }
 
   public AccountVO save(AccountSave save) {
-
     AccountNumber accountNumber = generateUniqueAccountNumber(BankCode.DOLLEE);
-    log.info("Account save: accountNumber={}, balance={} userId={}", accountNumber, save.getBalance(), save.getUserId());
-
-    Account account = Account.newInstance(accountNumber, Money.wons(save.getBalance()), save.getUserId());
-    return AccountMapper.toResponse(account);
+    log.info("Account save: accountNumber={}, balance={} userId={}", accountNumber.getValue(),
+        save.getBalance(), save.getUserId());
+    return AccountMapper.toResponse(accountRepository.save(
+        Account.newInstance(accountNumber, Money.wons(save.getBalance()), save.getUserId())));
   }
 
   public void remove(String accountId) {

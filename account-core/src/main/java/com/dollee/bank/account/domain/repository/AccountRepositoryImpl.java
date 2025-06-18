@@ -5,6 +5,7 @@ import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.infra.entity.AccountEntity;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.repository.AccountJpaRepository;
+import com.dollee.bank.common.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -24,7 +25,7 @@ public class AccountRepositoryImpl implements AccountRepository {
   @Override
   public Account findById(String accountId) {
     return AccountEntityMapper.toDomain(
-        jpaRepository.findById(accountId).orElseThrow());
+        jpaRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
   //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
