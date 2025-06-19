@@ -5,6 +5,7 @@ import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.infra.entity.AccountEntity;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.repository.AccountJpaRepository;
+import com.dollee.bank.common.exception.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -20,29 +21,29 @@ public class AccountRepositoryImpl implements AccountRepository {
         jpaRepository.save(AccountEntityMapper.toEntityForSave(save)));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public Account findById(String accountId) {
     return AccountEntityMapper.toDomain(
-        jpaRepository.findById(accountId).orElseThrow());
+        jpaRepository.findById(accountId)
+            .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public Account findByAccountNumber(String accountNumber) {
     return AccountEntityMapper.toDomain(
-        jpaRepository.findByAccountNumber(accountNumber).orElseThrow());
+        jpaRepository.findByAccountNumber(accountNumber)
+            .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public void delete(String accountId) {
-    AccountEntity accountEntity = jpaRepository.findById(accountId).orElseThrow();
+    AccountEntity accountEntity = jpaRepository.findById(accountId)
+        .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다."));
     jpaRepository.delete(accountEntity);
   }
 
   @Override
   public boolean existsByAccountNumber(AccountNumber candidate) {
-    return jpaRepository.existsByAccountNumber(candidate.getValue());
+    return jpaRepository.existsByAccountNumber(candidate);
   }
 }

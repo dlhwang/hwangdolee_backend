@@ -1,9 +1,9 @@
 package com.dollee.bank.account.config;
 
-import com.dollee.bank.account.config.exception.ConflictException;
-import com.dollee.bank.account.config.exception.DataNotFoundException;
-import com.dollee.bank.account.config.exception.NotInvalidException;
 import com.dollee.bank.common.enumtype.ErrorCode;
+import com.dollee.bank.common.exception.ConflictException;
+import com.dollee.bank.common.exception.DataNotFoundException;
+import com.dollee.bank.common.exception.NotInvalidException;
 import com.dollee.bank.common.util.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package com.dollee.bank.account.config.exception;
+package com.dollee.bank.common.exception;
 
 import java.io.Serial;
 
