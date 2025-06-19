@@ -31,7 +31,7 @@ public class LedgerFeePolicyDetail {
   private TruncateType truncateType;
 
   @Column(name = "rate", nullable = false)
-  private double rate = 0.0f;
+  private double rate = 0.01f;
 
   @Column(name = "fee_amount", nullable = false)
   private long amount = 0L;
@@ -40,4 +40,7 @@ public class LedgerFeePolicyDetail {
     return LedgerFeeDetail.newInstance(this, feeType.calculate(ledgerDetail.getAmount(), amount, rate, truncateType));
   }
 
+  public static LedgerFeePolicyDetail newInstance(FeeType feeType, TruncateType truncateType, double rate, long amount){
+    return new LedgerFeePolicyDetail(feeType, truncateType, rate , amount);
+  }
 }

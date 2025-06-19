@@ -81,5 +81,19 @@ subprojects {
 		delete file(generatedDir)
 	}
 
+	// 테스트 결과 로깅 (선택)
+	test {
+		testLogging {
+			events "passed", "skipped", "failed"
+		}
+	}
+
+}
+
+// 모든 서브모듈 테스트를 한 번에 실행하는 custom task
+tasks.register('fullTest') {
+	group = 'verification'
+	description = 'Runs all tests in all subprojects'
+	dependsOn subprojects.collect { it.tasks.matching { task -> task.name == 'test' } }
 }
 

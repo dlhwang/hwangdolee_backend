@@ -2,6 +2,7 @@ package com.dollee.bank.policy.domain.model;
 
 import com.dollee.bank.common.enumtype.Cycle;
 import com.dollee.bank.policy.domain.model.enumtype.FeeType;
+import com.dollee.bank.policy.domain.model.enumtype.TruncateType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -22,4 +23,8 @@ public class LedgerLimitPolicyDetail {
 
   @Column(name = "limit_amount", nullable = false)
   private long amount = 0L;
+
+  public static LedgerLimitPolicyDetail newInstance(Cycle cycle, long amount) {
+    return new LedgerLimitPolicyDetail(cycle, amount);
+  }
 }

@@ -1,7 +1,6 @@
 package com.dollee.bank.policy.infra.entity;
 
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
-import com.dollee.bank.policy.domain.model.LedgerFeePolicyDetail;
 import com.dollee.bank.policy.domain.model.LedgerLimitPolicyDetail;
 import com.dollee.bank.policy.domain.model.Policy;
 import jakarta.persistence.DiscriminatorValue;
