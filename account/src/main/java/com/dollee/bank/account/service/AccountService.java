@@ -8,6 +8,7 @@ import com.dollee.bank.account.dto.AccountMapper;
 import com.dollee.bank.account.dto.AccountRequest.AccountSave;
 import com.dollee.bank.account.dto.AccountResponse.AccountVO;
 import com.dollee.bank.common.enumtype.BankCode;
+import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.util.Money;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,27 +16,25 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-@Slf4j
 public class AccountService {
 
   private final AccountRepository accountRepository;
   private final AccountNumberGenerator accountNumberGenerator;
 
+  @Loggable
   public AccountVO getAccount(String accountId) {
-    log.info("Account getAccount: accountId={}", accountId);
     return AccountMapper.toResponse(accountRepository.findById(accountId));
   }
 
+  @Loggable
   public AccountVO save(AccountSave save) {
     AccountNumber accountNumber = generateUniqueAccountNumber(BankCode.DOLLEE);
-    log.info("Account save: accountNumber={}, balance={} userId={}", accountNumber.getNumber(),
-        save.getBalance(), save.getUserId());
     return AccountMapper.toResponse(accountRepository.save(
         Account.newInstance(accountNumber, Money.wons(save.getBalance()), save.getUserId())));
   }
 
+  @Loggable
   public void remove(String accountId) {
-    log.info("Account remove: accountId={}", accountId);
     accountRepository.delete(accountId);
   }
 
