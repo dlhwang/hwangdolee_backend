@@ -44,6 +44,6 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public boolean existsByAccountNumber(AccountNumber candidate) {
-    return jpaRepository.existsByAccountNumber(candidate.getNumber());
+    return jpaRepository.existsByAccountNumber(candidate);
   }
 }
