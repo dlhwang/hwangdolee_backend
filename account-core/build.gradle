@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    runtimeOnly 'com.mysql:mysql-connector-j'
+//    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
     implementation project(':common')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
