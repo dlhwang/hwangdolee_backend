@@ -21,24 +21,24 @@ public class AccountRepositoryImpl implements AccountRepository {
         jpaRepository.save(AccountEntityMapper.toEntityForSave(save)));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public Account findById(String accountId) {
     return AccountEntityMapper.toDomain(
-        jpaRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
+        jpaRepository.findById(accountId)
+            .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public Account findByAccountNumber(String accountNumber) {
     return AccountEntityMapper.toDomain(
-        jpaRepository.findByAccountNumber(accountNumber).orElseThrow());
+        jpaRepository.findByAccountNumber(accountNumber)
+            .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
-  //@TODO NEED GLOBAL EXCEPTION AccountNotFoundException
   @Override
   public void delete(String accountId) {
-    AccountEntity accountEntity = jpaRepository.findById(accountId).orElseThrow();
+    AccountEntity accountEntity = jpaRepository.findById(accountId)
+        .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다."));
     jpaRepository.delete(accountEntity);
   }
 
