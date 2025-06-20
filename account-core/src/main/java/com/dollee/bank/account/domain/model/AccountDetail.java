@@ -22,14 +22,14 @@ public class AccountDetail {
     return new AccountDetail(accountNumber, balance, userId);
   }
 
-  public static AccountDetail increaseBalance(AccountDetail accountDetail, Money amount) {
+  protected static AccountDetail increaseBalance(AccountDetail accountDetail, Money amount) {
     return new AccountDetail(
         accountDetail.getAccountNumber(),
         Money.wons(accountDetail.getBalance()).plus(amount).longValue(),
         accountDetail.getUserId());
   }
 
-  public static AccountDetail decreaseBalance(AccountDetail accountDetail, Money amount) {
+  protected static AccountDetail decreaseBalance(AccountDetail accountDetail, Money amount) {
     return new AccountDetail(
         accountDetail.getAccountNumber(),
         Money.wons(accountDetail.getBalance()).minus(amount).longValue(),
