@@ -19,22 +19,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class LedgerFeePolicyDetail {
 
-  @Column(name = "fee_type", nullable = false)
+  @Column(name = "fee_type")
   @Enumerated(EnumType.STRING)
-  private FeeType feeType;
+  private FeeType feeType = FeeType.없음;
 
-  @Column(name = "truncate_type", nullable = false)
+  @Column(name = "truncate_type")
   @Enumerated(EnumType.STRING)
-  private TruncateType truncateType;
+  private TruncateType truncateType = TruncateType.NO;
 
-  @Column(name = "rate", nullable = false)
+  @Column(name = "rate")
   private double rate = 0.01f;
 
-  @Column(name = "fee_amount", nullable = false)
+  @Column(name = "fee_amount")
   private long amount = 0L;
 
   public static LedgerFeePolicyDetail newInstance(
       FeeType feeType, TruncateType truncateType, double rate, long amount) {
+
+    if (feeType == null) {
+      throw new IllegalArgumentException("feeType cannot be null");
+    }
+
+    if (truncateType == null) {
+      throw new IllegalArgumentException("truncateType cannot be null");
+    }
     return new LedgerFeePolicyDetail(feeType, truncateType, rate, amount);
   }
 

@@ -5,11 +5,10 @@ WORKDIR /app
 COPY . .
 RUN chmod +x ./gradlew
 RUN ./gradlew build -x test --stacktrace
-RUN ls -l /app/account/build/libs
 
 # Stage 2 - 런타임
 FROM openjdk:23-jdk
 WORKDIR /app
-COPY --from=builder /app/account/build/libs/account.jar account.jar
+COPY --from=builder /app/deposit/build/libs/deposit.jar deposit.jar
 RUN ls -l /app
-ENTRYPOINT ["java", "-jar", "account.jar"]
+ENTRYPOINT ["java", "-jar", "deposit.jar"]

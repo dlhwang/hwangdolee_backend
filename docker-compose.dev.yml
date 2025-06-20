@@ -1,5 +1,5 @@
 services:
-  app:
+  account:
     build:
       context: ./
       dockerfile: account/Dockerfile
@@ -9,8 +9,32 @@ services:
     working_dir: /app
     command: [ "./gradlew", "bootRun" ]
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dollee_bank
+      SPRING_DATASOURCE_USERNAME: dollee_user
+      SPRING_DATASOURCE_PASSWORD: dollee_pass
+      SPRING_REDIS_HOST: redis
+    networks:
+      - backend
+  deposit:
+    build:
+      context: ./
+      dockerfile: deposit/Dockerfile
+    container_name: dolleebank-deposit
+    ports:
+      - "8082:8082"
+    working_dir: /app
+    command: [ "./gradlew", "bootRun" ]
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/dollee_bank

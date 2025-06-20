@@ -8,15 +8,18 @@ import com.dollee.bank.account.domain.model.LedgerFeeDetail;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.domain.repository.AccountRepository;
 import com.dollee.bank.account.domain.repository.LedgerRepository;
+import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.util.Money;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicy;
 import com.dollee.bank.policy.domain.model.LedgerLimitPolicy;
 import com.dollee.bank.policy.domain.service.LedgerFeePolicyService;
 import com.dollee.bank.policy.domain.service.LedgerLimitPolicyService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LedgerService {
@@ -26,8 +29,9 @@ public class LedgerService {
   private final LedgerFeePolicyService feePolicyService;
   private final LedgerLimitPolicyService limitPolicyService;
 
+  @Loggable
   @Transactional
-  Ledger deposit(DepositCommand command) {
+  public Ledger deposit(DepositCommand command) {
     final LedgerFeePolicy activeFeePolicy = feePolicyService.getActivePolicyOrDefault(
         command.getLedgerType(), command.getOccurredAt());
     final LedgerLimitPolicy activeLimitPolicy = limitPolicyService.getActivePolicyOrDefault(
@@ -48,12 +52,15 @@ public class LedgerService {
 
     // 입금
     account.increaseBalance(Money.wons(command.getAmount()));
+    accountRepository.save(account);
     return repository.save(Ledger.newInstance(account.getAccountId(), ledgerDetail,
-        account.getAccountDetail(), feeDetail));
+        account.getAccountDetail(), feeDetail), account);
   }
 
   private void validateLimit(LedgerType type, Account account,
       LedgerLimitPolicy activeLimitPolicy) {
+    log.info("#### amount :{} , Cycle {}", activeLimitPolicy.getAmount(),
+        activeLimitPolicy.getCycle());
     final long sumByCycle = repository.getSumByCycle(account.getAccountId(),
         activeLimitPolicy.getCycle());
     if (sumByCycle > activeLimitPolicy.getAmount()) {
