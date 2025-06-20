@@ -1,5 +1,7 @@
 package com.dollee.bank.policy.domain.model;
 
+import com.dollee.bank.account.domain.model.LedgerDetail;
+import com.dollee.bank.account.domain.model.LedgerFeeDetail;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -38,5 +40,9 @@ public class LedgerFeePolicy {
 
   public boolean isEffective() {
     return LocalDateTime.now().isBefore(effectiveFrom);
+  }
+
+  public LedgerFeeDetail calculate(LedgerDetail detail) {
+    return ledgerFeePolicyDetail.calculate(detail);
   }
 }

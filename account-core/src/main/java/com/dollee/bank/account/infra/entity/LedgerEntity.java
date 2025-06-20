@@ -29,8 +29,11 @@ public class LedgerEntity {
   @Column(name = "ledger_id", columnDefinition = "varchar(500)", nullable = false)
   private String id;
 
+  @Column(name = "account_id", nullable = false)
+  private String accountId;
+
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "account_id", nullable = false)
+  @JoinColumn(name = "account_id", insertable = false, updatable = false)
   private AccountEntity account;
 
   @Embedded
@@ -43,14 +46,32 @@ public class LedgerEntity {
   private LedgerFeeDetail ledgerFeeDetail;
 
   protected LedgerEntity(
-      AccountEntity account, LedgerDetail ledgerDetail, AccountDetail accountDetail) {
+      AccountEntity account, LedgerDetail ledgerDetail, AccountDetail accountDetail,
+      LedgerFeeDetail ledgerFeeDetail) {
+
+    if (account == null) {
+      throw new IllegalArgumentException("account는 null일 수 없습니다.");
+    }
+    if (ledgerDetail == null) {
+      throw new IllegalArgumentException("ledgerDetail은 null일 수 없습니다.");
+    }
+    if (accountDetail == null) {
+      throw new IllegalArgumentException("accountDetail은 null일 수 없습니다.");
+    }
+    if (ledgerFeeDetail == null) {
+      throw new IllegalArgumentException("ledgerFeeDetail은 null일 수 없습니다.");
+    }
+
+    this.accountId = account.getId();
     this.account = account;
     this.ledgerDetail = ledgerDetail;
     this.accountDetail = accountDetail;
+    this.ledgerFeeDetail = ledgerFeeDetail;
   }
 
   public static LedgerEntity newInstance(
-      AccountEntity account, LedgerDetail ledgerDetail, AccountDetail accountDetail) {
-    return new LedgerEntity(account, ledgerDetail, accountDetail);
+      AccountEntity account, LedgerDetail ledgerDetail, AccountDetail accountDetail,
+      LedgerFeeDetail ledgerFeeDetail) {
+    return new LedgerEntity(account, ledgerDetail, accountDetail, ledgerFeeDetail);
   }
 }

@@ -1,6 +1,7 @@
 package com.dollee.bank.policy.domain.model;
 
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
+import com.dollee.bank.common.enumtype.Cycle;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,4 +42,13 @@ public class LedgerLimitPolicy {
   public boolean isEffective() {
     return LocalDateTime.now().isBefore(effectiveFrom);
   }
+
+  public Cycle getCycle() {
+    return this.ledgerLimitPolicyDetail.getCycle();
+  }
+
+  public long getAmount() {
+    return this.ledgerLimitPolicyDetail.getAmount();
+  }
+
 }
