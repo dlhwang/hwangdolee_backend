@@ -11,7 +11,6 @@ import com.dollee.bank.common.enumtype.BankCode;
 import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.util.Money;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -29,8 +28,9 @@ public class AccountService {
   @Loggable
   public AccountVO save(AccountSave save) {
     AccountNumber accountNumber = generateUniqueAccountNumber(BankCode.DOLLEE);
-    return AccountMapper.toResponse(accountRepository.save(
-        Account.newInstance(accountNumber, Money.wons(save.getBalance()), save.getUserId())));
+    return AccountMapper.toResponse(
+        accountRepository.save(
+            Account.newInstance(accountNumber, Money.wons(save.getBalance()), save.getUserId())));
   }
 
   @Loggable

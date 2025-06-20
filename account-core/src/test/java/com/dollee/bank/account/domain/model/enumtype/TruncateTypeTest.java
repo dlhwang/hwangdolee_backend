@@ -1,6 +1,6 @@
 package com.dollee.bank.account.domain.model.enumtype;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.dollee.bank.policy.domain.model.enumtype.TruncateType;
 import org.junit.jupiter.api.DisplayName;
@@ -33,5 +33,4 @@ class TruncateTypeTest {
     assertEquals(-100L, TruncateType.TEN.truncate(-7L));
     assertEquals(-100L, TruncateType.TEN.truncate(-17L));
   }
-
 }

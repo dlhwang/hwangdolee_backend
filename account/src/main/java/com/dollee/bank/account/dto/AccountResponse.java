@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 @Builder(access = AccessLevel.PRIVATE)
 @Schema(description = "계좌 정보")
@@ -40,8 +39,6 @@ public class AccountResponse {
   }
 
   public static AccountResponse to(Page<AccountVO> vos) {
-    return AccountResponse.builder()
-        .accountList(vos)
-        .build();
+    return AccountResponse.builder().accountList(vos).build();
   }
 }

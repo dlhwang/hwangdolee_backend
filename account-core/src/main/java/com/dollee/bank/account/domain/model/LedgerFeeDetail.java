@@ -21,7 +21,7 @@ public class LedgerFeeDetail {
   @Column(name = "fee", nullable = false)
   private long fee;
 
-  public static LedgerFeeDetail newInstance(LedgerFeePolicyDetail ledgerFeePolicyDetail, long fee){
+  public static LedgerFeeDetail newInstance(LedgerFeePolicyDetail ledgerFeePolicyDetail, long fee) {
     return new LedgerFeeDetail(ledgerFeePolicyDetail, fee);
   }
 }

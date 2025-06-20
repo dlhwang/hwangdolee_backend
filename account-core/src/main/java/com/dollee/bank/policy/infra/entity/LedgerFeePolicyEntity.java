@@ -1,12 +1,8 @@
 package com.dollee.bank.policy.infra.entity;
 
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
-import com.dollee.bank.policy.domain.model.DefaultLedgerFeePolicyRegistry;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicyDetail;
 import com.dollee.bank.policy.domain.model.Policy;
-import com.dollee.bank.policy.domain.model.enumtype.FeeType;
-import com.dollee.bank.policy.domain.model.enumtype.TruncateType;
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -32,13 +28,18 @@ public class LedgerFeePolicyEntity extends Policy implements Serializable {
   @Embedded
   private LedgerFeePolicyDetail ledgerFeePolicyDetail;
 
-  protected LedgerFeePolicyEntity(LedgerType ledgerType, LocalDateTime effectiveFrom,
+  protected LedgerFeePolicyEntity(
+      LedgerType ledgerType,
+      LocalDateTime effectiveFrom,
       LedgerFeePolicyDetail ledgerFeePolicyDetail) {
     super(ledgerType, effectiveFrom);
     this.ledgerFeePolicyDetail = ledgerFeePolicyDetail;
   }
 
-  protected LedgerFeePolicyEntity(String id, LedgerType ledgerType, LocalDateTime effectiveFrom,
+  protected LedgerFeePolicyEntity(
+      String id,
+      LedgerType ledgerType,
+      LocalDateTime effectiveFrom,
       LedgerFeePolicyDetail ledgerFeePolicyDetail) {
     super(id, ledgerType, effectiveFrom);
     this.ledgerFeePolicyDetail = ledgerFeePolicyDetail;

@@ -26,7 +26,9 @@ public class AccountEntity {
   private String id;
 
   @Embedded
-  @AttributeOverride(name = "value", column = @Column(name = "account_number", nullable = false, unique = true))
+  @AttributeOverride(
+      name = "value",
+      column = @Column(name = "account_number", nullable = false, unique = true))
   private AccountNumber accountNumber;
 
   @Column(name = "balance", nullable = false)
@@ -41,8 +43,8 @@ public class AccountEntity {
     this.userId = userId;
   }
 
-  public static AccountEntity newInstance(AccountNumber accountNumber, long balance, String userId) {
+  public static AccountEntity newInstance(
+      AccountNumber accountNumber, long balance, String userId) {
     return new AccountEntity(accountNumber, balance, userId);
   }
-
 }

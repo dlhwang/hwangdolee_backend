@@ -3,7 +3,6 @@ package com.dollee.bank.policy.domain.service;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicy;
 import com.dollee.bank.policy.domain.repository.LedgerFeePolicyRepository;
-import com.dollee.bank.policy.infra.entity.LedgerFeePolicyEntity;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,4 @@ public class LedgerFeePolicyService {
   public LedgerFeePolicy getActivePolicyOrDefault(LedgerType ledgerType) {
     return repository.getActivePolicyOrDefault(ledgerType, LocalDateTime.now());
   }
-
-
 }

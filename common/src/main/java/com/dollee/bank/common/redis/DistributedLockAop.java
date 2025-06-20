@@ -7,9 +7,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
-import org.redisson.api.RLock;
 
 /**
  * https://helloworld.kurly.com/blog/distributed-redisson-lock/
@@ -32,13 +32,15 @@ public class DistributedLockAop {
     DistributedLock distributedLock = method.getAnnotation(DistributedLock.class);
 
     String key =
-        REDISSON_LOCK_PREFIX + CustomSpringELParser.getDynamicValue(signature.getParameterNames(),
-            joinPoint.getArgs(), distributedLock.key());
+        REDISSON_LOCK_PREFIX
+            + CustomSpringELParser.getDynamicValue(
+            signature.getParameterNames(), joinPoint.getArgs(), distributedLock.key());
     RLock rLock = redissonClient.getLock(key);
 
     try {
-      boolean available = rLock.tryLock(distributedLock.waitTime(), distributedLock.leaseTime(),
-          distributedLock.timeUnit());
+      boolean available =
+          rLock.tryLock(
+              distributedLock.waitTime(), distributedLock.leaseTime(), distributedLock.timeUnit());
       if (!available) {
         return false;
       }

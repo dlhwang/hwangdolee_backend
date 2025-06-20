@@ -4,5 +4,4 @@ public class Ledger {
   String ledgerId;
   String accountId;
   LedgerDetail detail;
-
 }

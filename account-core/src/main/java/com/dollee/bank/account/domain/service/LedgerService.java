@@ -1,7 +1,5 @@
 package com.dollee.bank.account.domain.service;
 
-import com.dollee.bank.account.domain.model.Ledger;
-import com.dollee.bank.account.domain.model.LedgerDetail;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.domain.repository.LedgerRepository;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicy;
@@ -25,17 +23,11 @@ public class LedgerService {
     LocalDateTime now = LocalDateTime.now();
     LedgerFeePolicy activeFeePolicy = feePolicyService.getActivePolicyOrDefault(type, now);
     LedgerLimitPolicy activeLimitPolicy = limitPolicyService.getActivePolicyOrDefault(type, now);
-
-
-
   }
 
   void withdrawal() {
-
   }
 
   void transfer() {
-
   }
-
 }

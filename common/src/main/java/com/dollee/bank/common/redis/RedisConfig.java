@@ -22,9 +22,8 @@ public class RedisConfig {
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
 
-    final LettuceClientConfiguration clientConfiguration = LettuceClientConfiguration.builder()
-        .commandTimeout(Duration.ofMillis(300L))
-        .build();
+    final LettuceClientConfiguration clientConfiguration =
+        LettuceClientConfiguration.builder().commandTimeout(Duration.ofMillis(300L)).build();
 
     return new LettuceConnectionFactory(
         new RedisStandaloneConfiguration(redisProperties.getHost(), redisProperties.getPort()),
@@ -40,4 +39,3 @@ public class RedisConfig {
     return template;
   }
 }
-

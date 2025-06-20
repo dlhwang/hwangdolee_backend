@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LedgerLimitPolicyJpaRepository extends
-    JpaRepository<LedgerLimitPolicyEntity, String> {
+public interface LedgerLimitPolicyJpaRepository
+    extends JpaRepository<LedgerLimitPolicyEntity, String> {
 
-  Optional<LedgerLimitPolicyEntity> findFirstByLedgerTypeAndEffectiveFromLessThanEqualOrderByEffectiveFrom(
+  Optional<LedgerLimitPolicyEntity>
+  findFirstByLedgerTypeAndEffectiveFromLessThanEqualOrderByEffectiveFrom(
       LedgerType ledgerType, LocalDateTime baseTime);
 }

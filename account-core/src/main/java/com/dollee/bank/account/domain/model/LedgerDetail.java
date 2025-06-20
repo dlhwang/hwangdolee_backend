@@ -19,14 +19,20 @@ public class LedgerDetail {
 
   @Enumerated(EnumType.STRING)
   private LedgerType ledgerType;
+
   private LocalDateTime occurredAt;
   private long amount;
-  private String description;// 송금인/수취인 정보가 필요한 경우 추가 필드도 고려
+  private String description; // 송금인/수취인 정보가 필요한 경우 추가 필드도 고려
+
   @Column(name = "executed_by", nullable = false)
   private String executedBy;
 
-  public static LedgerDetail newInstance(LedgerType ledgerType, LocalDateTime occurredAt,
-      long amount, String description, String executedBy) {
+  public static LedgerDetail newInstance(
+      LedgerType ledgerType,
+      LocalDateTime occurredAt,
+      long amount,
+      String description,
+      String executedBy) {
     return new LedgerDetail(ledgerType, occurredAt, amount, description, executedBy);
   }
 }

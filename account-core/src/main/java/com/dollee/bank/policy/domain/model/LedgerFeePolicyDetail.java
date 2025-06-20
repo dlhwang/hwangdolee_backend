@@ -2,15 +2,12 @@ package com.dollee.bank.policy.domain.model;
 
 import com.dollee.bank.account.domain.model.LedgerDetail;
 import com.dollee.bank.account.domain.model.LedgerFeeDetail;
-import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.policy.domain.model.enumtype.FeeType;
 import com.dollee.bank.policy.domain.model.enumtype.TruncateType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,11 +33,13 @@ public class LedgerFeePolicyDetail {
   @Column(name = "fee_amount", nullable = false)
   private long amount = 0L;
 
-  public LedgerFeeDetail calculate(LedgerDetail ledgerDetail) {
-    return LedgerFeeDetail.newInstance(this, feeType.calculate(ledgerDetail.getAmount(), amount, rate, truncateType));
+  public static LedgerFeePolicyDetail newInstance(
+      FeeType feeType, TruncateType truncateType, double rate, long amount) {
+    return new LedgerFeePolicyDetail(feeType, truncateType, rate, amount);
   }
 
-  public static LedgerFeePolicyDetail newInstance(FeeType feeType, TruncateType truncateType, double rate, long amount){
-    return new LedgerFeePolicyDetail(feeType, truncateType, rate , amount);
+  public LedgerFeeDetail calculate(LedgerDetail ledgerDetail) {
+    return LedgerFeeDetail.newInstance(
+        this, feeType.calculate(ledgerDetail.getAmount(), amount, rate, truncateType));
   }
 }
