@@ -28,6 +28,7 @@ public abstract class Policy implements Serializable {
 
   @Serial
   private static final long serialVersionUID = 8798822264817869236L;
+
   @Id
   @Ulid
   @Column(name = "policy_id", columnDefinition = "varchar(500)", nullable = false)

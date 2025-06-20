@@ -16,5 +16,4 @@ public class AccountNumber {
   public static AccountNumber to(String value) {
     return new AccountNumber(value);
   }
-
 }

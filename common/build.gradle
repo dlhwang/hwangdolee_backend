@@ -1,14 +1,10 @@
-plugins {
-    id 'java'
+bootJar {
+    enabled = false
 }
-
-group = 'com.dollee.bank'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+jar {
+    enabled = true
+    archiveFileName = 'common.jar'
 }
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.redisson:redisson-spring-boot-starter:3.27.2' // 최신 버전 확인

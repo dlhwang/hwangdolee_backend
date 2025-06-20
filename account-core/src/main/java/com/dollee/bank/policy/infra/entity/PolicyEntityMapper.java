@@ -9,16 +9,12 @@ public class PolicyEntityMapper {
         domain.getPolicyId(),
         domain.getLedgerType(),
         domain.getEffectiveFrom(),
-        domain.getLedgerFeePolicyDetail()
-    );
+        domain.getLedgerFeePolicyDetail());
   }
 
   public static LedgerFeePolicyEntity toEntityForSave(LedgerFeePolicy domain) {
     return new LedgerFeePolicyEntity(
-        domain.getLedgerType(),
-        domain.getEffectiveFrom(),
-        domain.getLedgerFeePolicyDetail()
-    );
+        domain.getLedgerType(), domain.getEffectiveFrom(), domain.getLedgerFeePolicyDetail());
   }
 
   public static LedgerFeePolicy toDomain(LedgerFeePolicyEntity entity) {
@@ -26,8 +22,7 @@ public class PolicyEntityMapper {
         entity.getId(),
         entity.getLedgerType(),
         entity.getEffectiveFrom(),
-        entity.getLedgerFeePolicyDetail()
-    );
+        entity.getLedgerFeePolicyDetail());
   }
 
   public static LedgerLimitPolicyEntity toEntity(LedgerLimitPolicy domain) {
@@ -35,16 +30,12 @@ public class PolicyEntityMapper {
         domain.getPolicyId(),
         domain.getLedgerType(),
         domain.getEffectiveFrom(),
-        domain.getLedgerLimitPolicyDetail()
-    );
+        domain.getLedgerLimitPolicyDetail());
   }
 
   public static LedgerLimitPolicyEntity toEntityForSave(LedgerLimitPolicy domain) {
     return new LedgerLimitPolicyEntity(
-        domain.getLedgerType(),
-        domain.getEffectiveFrom(),
-        domain.getLedgerLimitPolicyDetail()
-    );
+        domain.getLedgerType(), domain.getEffectiveFrom(), domain.getLedgerLimitPolicyDetail());
   }
 
   public static LedgerLimitPolicy toDomain(LedgerLimitPolicyEntity entity) {
@@ -52,7 +43,6 @@ public class PolicyEntityMapper {
         entity.getId(),
         entity.getLedgerType(),
         entity.getEffectiveFrom(),
-        entity.getLedgerLimitPolicyDetail()
-    );
+        entity.getLedgerLimitPolicyDetail());
   }
 }

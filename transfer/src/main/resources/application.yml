@@ -1,0 +1,32 @@
+server:
+  port: 8084
+
+spring:
+  profiles:
+    active: local
+  #    active: docker
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+logging:
+  config: classpath:logback-local.xml
+  level:
+    root: INFO
+    org:
+      springframework:
+        security: DEBUG
+        web: DEBUG  # Spring Web 관련 로깅 레벨 DEBUG
+      hibernate:
+        SQL: DEBUG  # Hibernate SQL 로깅
+        type: DEBUG  # SQL 바인딩된 값도 로그에 출력
+    com.estate: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true  # API 문서 활성화
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true  # Swagger UI 활성화
+    path: /swagger-ui.html  # 접속 경로

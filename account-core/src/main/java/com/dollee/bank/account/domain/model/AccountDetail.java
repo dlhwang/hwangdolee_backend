@@ -17,19 +17,23 @@ public class AccountDetail {
   private long balance;
   private String userId;
 
-  public static AccountDetail newInstance(AccountNumber accountNumber, long balance,
-      String userId) {
+  public static AccountDetail newInstance(
+      AccountNumber accountNumber, long balance, String userId) {
     return new AccountDetail(accountNumber, balance, userId);
   }
 
-  public static AccountDetail increaseBalance(AccountDetail accountDetail, Money amount) {
-    return new AccountDetail(accountDetail.getAccountNumber(),
-        Money.wons(accountDetail.getBalance()).plus(amount).longValue(), accountDetail.getUserId());
+  protected static AccountDetail increaseBalance(AccountDetail accountDetail, Money amount) {
+    return new AccountDetail(
+        accountDetail.getAccountNumber(),
+        Money.wons(accountDetail.getBalance()).plus(amount).longValue(),
+        accountDetail.getUserId());
   }
 
-  public static AccountDetail decreaseBalance(AccountDetail accountDetail, Money amount) {
-    return new AccountDetail(accountDetail.getAccountNumber(),
-        Money.wons(accountDetail.getBalance()).minus(amount).longValue(), accountDetail.getUserId());
+  protected static AccountDetail decreaseBalance(AccountDetail accountDetail, Money amount) {
+    return new AccountDetail(
+        accountDetail.getAccountNumber(),
+        Money.wons(accountDetail.getBalance()).minus(amount).longValue(),
+        accountDetail.getUserId());
   }
 
   public long getAmount() {

@@ -18,9 +18,10 @@ public class Account {
     return new Account(accountNumber, balance, userId);
   }
 
-  public static Account of(String accountId, AccountNumber accountNumber, Money balance,
-      String userId) {
-    return new Account(accountId, AccountDetail.newInstance(accountNumber, balance.longValue(), userId));
+  public static Account of(
+      String accountId, AccountNumber accountNumber, Money balance, String userId) {
+    return new Account(
+        accountId, AccountDetail.newInstance(accountNumber, balance.longValue(), userId));
   }
 
   protected Account(AccountNumber accountNumber, Money balance, String userId) {
@@ -43,7 +44,7 @@ public class Account {
     return accountDetail.getAccountNumber();
   }
 
-  public String getUserId(){
+  public String getUserId() {
     return this.accountDetail.getUserId();
   }
 

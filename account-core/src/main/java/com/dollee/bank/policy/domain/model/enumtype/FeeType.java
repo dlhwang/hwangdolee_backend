@@ -23,5 +23,6 @@ public enum FeeType {
     }
   };
 
-  public abstract long calculate(long amount, long feeValue, double rate, TruncateType truncateType);
+  public abstract long calculate(
+      long amount, long feeValue, double rate, TruncateType truncateType);
 }

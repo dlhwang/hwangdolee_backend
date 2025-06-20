@@ -1,6 +1,5 @@
 package com.dollee.bank.policy.domain.model.enumtype;
 
-
 import java.util.function.Function;
 import lombok.Getter;
 import org.springframework.util.Assert;

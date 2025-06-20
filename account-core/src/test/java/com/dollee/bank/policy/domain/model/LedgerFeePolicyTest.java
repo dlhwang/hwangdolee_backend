@@ -1,12 +1,10 @@
 package com.dollee.bank.policy.domain.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.policy.domain.model.enumtype.FeeType;
 import com.dollee.bank.policy.domain.model.enumtype.TruncateType;
-import com.dollee.bank.policy.infra.entity.LedgerFeePolicyEntity;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,10 +13,8 @@ class LedgerFeePolicyTest {
   @Test
   @DisplayName("TRANSFER 기본 수수료 정책은 정율 1%, 절사 없음, 정액 0원이다")
   void testCreateDefaultForTransfer() {
-    LedgerFeePolicy domain = LedgerFeePolicy.createDefault(
-        LedgerType.TRANSFER,
-        LocalDateTime.of(2025, 6, 18, 0, 0)
-    );
+    LedgerFeePolicy domain =
+        LedgerFeePolicy.createDefault(LedgerType.TRANSFER, LocalDateTime.of(2025, 6, 18, 0, 0));
 
     LedgerFeePolicyDetail detail = domain.getLedgerFeePolicyDetail();
 
@@ -31,10 +27,8 @@ class LedgerFeePolicyTest {
   @Test
   @DisplayName("TRANSFER 이외의 기본 수수료 정책은 정책 없음이 적용된다")
   void testCreateDefaultForWithoutTransfer() {
-    LedgerFeePolicy domain = LedgerFeePolicy.createDefault(
-        LedgerType.DEPOSIT,
-        LocalDateTime.of(2025, 6, 18, 0, 0)
-    );
+    LedgerFeePolicy domain =
+        LedgerFeePolicy.createDefault(LedgerType.DEPOSIT, LocalDateTime.of(2025, 6, 18, 0, 0));
 
     LedgerFeePolicyDetail detail = domain.getLedgerFeePolicyDetail();
 
@@ -43,5 +37,4 @@ class LedgerFeePolicyTest {
     assertThat(detail.getAmount()).isEqualTo(0L);
     assertThat(detail.getTruncateType()).isEqualTo(TruncateType.NO);
   }
-
 }

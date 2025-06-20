@@ -1,7 +1,6 @@
 package com.dollee.bank.account.infra.entity;
 
 import com.dollee.bank.account.domain.model.Account;
-import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.common.util.Money;
 
 public class AccountEntityMapper {
@@ -10,16 +9,11 @@ public class AccountEntityMapper {
         domain.getAccountId(),
         domain.getAccountDetail().getAccountNumber(),
         domain.getAmount(),
-        domain.getUserId()
-    );
+        domain.getUserId());
   }
 
   public static AccountEntity toEntityForSave(Account domain) {
-    return new AccountEntity(
-        domain.getAccountNumber(),
-        domain.getAmount(),
-        domain.getUserId()
-    );
+    return new AccountEntity(domain.getAccountNumber(), domain.getAmount(), domain.getUserId());
   }
 
   public static Account toDomain(AccountEntity entity) {
@@ -27,7 +21,6 @@ public class AccountEntityMapper {
         entity.getId(),
         entity.getAccountNumber(),
         Money.wons(entity.getBalance()),
-        entity.getUserId()
-    );
+        entity.getUserId());
   }
 }

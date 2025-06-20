@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Cycle {
   NONE("없음"),
-  DAILY("매일"),
-  WEEKLY("매주"),
-  MONTHLY("매월");
+  DAILY("일별"),
+  WEEKLY("주별"),
+  MONTHLY("월별");
   private final String name;
 }

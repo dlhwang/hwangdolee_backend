@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccountJpaRepository extends JpaRepository<AccountEntity, String> {
- boolean existsByAccountNumber(AccountNumber accountNumber);
- Optional<AccountEntity> findByAccountNumber(String accountNumber);
+
+  boolean existsByAccountNumber(AccountNumber accountNumber);
+
+  Optional<AccountEntity> findByAccountNumber(AccountNumber accountNumber);
 }

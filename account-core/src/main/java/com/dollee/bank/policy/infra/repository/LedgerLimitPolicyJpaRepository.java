@@ -5,10 +5,13 @@ import com.dollee.bank.policy.infra.entity.LedgerLimitPolicyEntity;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface LedgerLimitPolicyJpaRepository extends
-    JpaRepository<LedgerLimitPolicyEntity, String> {
+@Repository
+public interface LedgerLimitPolicyJpaRepository
+    extends JpaRepository<LedgerLimitPolicyEntity, String> {
 
-  Optional<LedgerLimitPolicyEntity> findFirstByLedgerTypeAndEffectiveFromLessThanEqualOrderByEffectiveFrom(
+  Optional<LedgerLimitPolicyEntity>
+  findFirstByLedgerTypeAndEffectiveFromLessThanEqualOrderByEffectiveFrom(
       LedgerType ledgerType, LocalDateTime baseTime);
 }

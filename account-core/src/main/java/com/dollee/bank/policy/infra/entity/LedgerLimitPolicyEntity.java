@@ -27,12 +27,19 @@ public class LedgerLimitPolicyEntity extends Policy implements Serializable {
   @Embedded
   private LedgerLimitPolicyDetail ledgerLimitPolicyDetail;
 
-  protected LedgerLimitPolicyEntity(LedgerType ledgerType, LocalDateTime effectiveFrom, LedgerLimitPolicyDetail ledgerLimitPolicyDetail){
+  protected LedgerLimitPolicyEntity(
+      LedgerType ledgerType,
+      LocalDateTime effectiveFrom,
+      LedgerLimitPolicyDetail ledgerLimitPolicyDetail) {
     super(ledgerType, effectiveFrom);
     this.ledgerLimitPolicyDetail = ledgerLimitPolicyDetail;
   }
 
-  protected LedgerLimitPolicyEntity(String id, LedgerType ledgerType, LocalDateTime effectiveFrom, LedgerLimitPolicyDetail ledgerLimitPolicyDetail){
+  protected LedgerLimitPolicyEntity(
+      String id,
+      LedgerType ledgerType,
+      LocalDateTime effectiveFrom,
+      LedgerLimitPolicyDetail ledgerLimitPolicyDetail) {
     super(id, ledgerType, effectiveFrom);
     this.ledgerLimitPolicyDetail = ledgerLimitPolicyDetail;
   }

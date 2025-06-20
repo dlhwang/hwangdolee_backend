@@ -1,28 +1,15 @@
-#FROM openjdk:23-jdk
-#WORKDIR /app
-#COPY build/libs/account-0.0.1-SNAPSHOT.jar /app/app.jar
-#ENTRYPOINT ["java", "-jar", "app.jar"]
-
-# === 1단계: Gradle 빌드용 이미지 ===
-FROM gradle:8.6.0-jdk17 AS builder
-RUN mkdir /app
+# Stage 1 - 빌드
+FROM gradle:8.5-jdk17 AS builder
 WORKDIR /app
-
-# 프로젝트 전체 복사
+# 전체 프로젝트 복사 (멀티모듈이기 때문에 루트 복사 필요)
 COPY . .
+RUN chmod +x ./gradlew
+RUN ./gradlew build -x test --stacktrace
+RUN ls -l /app/account/build/libs
 
-# 현재 디렉토리 내용 출력
-RUN echo "=== 파일 목록 ===" && ls -al
-
-# 필요한 모듈만 빌드
-RUN ./gradlew :account:bootJar
-
-# === 2단계: 런타임 이미지 ===
+# Stage 2 - 런타임
 FROM openjdk:23-jdk
 WORKDIR /app
-
-# 빌드된 jar 복사
-COPY --from=builder /app/account/build/libs/*.jar account.jar
-
-# 실행
-ENTRYPOINT ["java", "-jar", " = 'account'.jar"]
+COPY --from=builder /app/account/build/libs/account.jar account.jar
+RUN ls -l /app
+ENTRYPOINT ["java", "-jar", "account.jar"]
