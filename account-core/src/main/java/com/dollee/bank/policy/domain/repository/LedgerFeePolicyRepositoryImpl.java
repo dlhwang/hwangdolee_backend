@@ -1,19 +1,12 @@
 package com.dollee.bank.policy.domain.repository;
 
-import static com.dollee.bank.account.infra.entity.QAccountEntity.accountEntity;
-
-import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
-import com.dollee.bank.account.infra.entity.AccountEntity;
-import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.common.exception.DataNotFoundException;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicy;
 import com.dollee.bank.policy.infra.entity.LedgerFeePolicyEntity;
 import com.dollee.bank.policy.infra.entity.PolicyEntityMapper;
 import com.dollee.bank.policy.infra.repository.LedgerFeePolicyJpaRepository;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
