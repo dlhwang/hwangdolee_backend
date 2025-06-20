@@ -45,7 +45,7 @@ public class LedgerFeePolicyRepositoryImpl implements LedgerFeePolicyRepository 
 
   @Override
   public LedgerFeePolicy getActivePolicyOrDefault(LedgerType ledgerType, LocalDateTime baseTime) {
-    return repository.findFirstByLedgerTypeAndEffectiveFromLessThanEqualOrderByEffectiveFrom(
+    return repository.findFirstByLedgerTypeAndEffectiveFromGreaterThanEqualOrderByEffectiveFromDesc(
             ledgerType, baseTime).map(PolicyEntityMapper::toDomain)
         .orElseGet(() -> this.save(LedgerFeePolicy.createDefault(ledgerType, baseTime)));
   }

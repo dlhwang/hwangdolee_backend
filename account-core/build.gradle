@@ -1,18 +1,15 @@
-plugins {
-    id 'java'
+bootJar {
+    enabled = false
+
 }
-
-group = 'com.dollee.bank'
-version = '1.0.0'
-
-repositories {
-    mavenCentral()
+jar {
+    enabled = true
+    archiveFileName = 'account-core.jar'
 }
-
 dependencies {
+    implementation project(':common')
     runtimeOnly 'com.mysql:mysql-connector-j'
 //    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
-    implementation project(':common')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

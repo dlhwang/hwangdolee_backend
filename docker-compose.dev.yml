@@ -6,6 +6,7 @@ services:
     container_name: dolleebank-account
     ports:
       - "8080:8080"
+    working_dir: /app
     command: [ "./gradlew", "bootRun" ]
     depends_on:
       - mysql
