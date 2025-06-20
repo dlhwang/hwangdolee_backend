@@ -33,7 +33,7 @@ public class AccountRepositoryImpl implements AccountRepository {
   public Account findByAccountNumber(String accountNumber) {
     return AccountEntityMapper.toDomain(
         jpaRepository
-            .findByAccountNumber(accountNumber)
+            .findByAccountNumber(AccountNumber.to(accountNumber))
             .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
   }
 
