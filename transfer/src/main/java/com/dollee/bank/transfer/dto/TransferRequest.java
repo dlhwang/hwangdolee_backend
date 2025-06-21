@@ -9,10 +9,10 @@ public class TransferRequest {
   @Data
   public static class Transfer {
 
-    @Schema(name = "accountNumber", description = "출금할 계좌 번호", example = "88812338212")
+    @Schema(name = "fromAccountNumber", description = "출금할 계좌 번호", example = "88812338212")
     private String fromAccountNumber;
-    @Schema(name = "accountNumber", description = "입금할 계좌 번호", example = "88812338212")
-    private String ToAccountNumber;
+    @Schema(name = "toAccountNumber", description = "입금할 계좌 번호", example = "88812338212")
+    private String toAccountNumber;
     @Schema(name = "amount", description = "이체 금액", example = "10000")
     private long amount;
     @Schema(name = "description", description = "비고", example = "비고")
