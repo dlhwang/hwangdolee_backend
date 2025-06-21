@@ -49,7 +49,7 @@ services:
       dockerfile: withdraw/Dockerfile
     container_name: dolleebank-withdraw
     ports:
-      - "8084:8084"
+      - "8086:8086"
     working_dir: /app
     command: [ "./gradlew", "bootRun" ]
     depends_on:
@@ -71,7 +71,7 @@ services:
       dockerfile: transfer/Dockerfile
     container_name: dolleebank-transfer
     ports:
-      - "8086:8086"
+      - "8084:8084"
     working_dir: /app
     command: [ "./gradlew", "bootRun" ]
     depends_on:
