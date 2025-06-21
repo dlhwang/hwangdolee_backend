@@ -10,6 +10,7 @@ import com.dollee.bank.common.exception.DataNotFoundException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,8 +20,10 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public Account save(Account save) {
-    return AccountEntityMapper.toDomain(
-        jpaRepository.save(AccountEntityMapper.toEntityForSave(save)));
+    AccountEntity entity = StringUtils.hasText(save.getAccountId())
+        ? AccountEntityMapper.toEntity(save)
+        : AccountEntityMapper.toEntityForSave(save);
+    return AccountEntityMapper.toDomain(jpaRepository.save(entity));
   }
 
   @Override
