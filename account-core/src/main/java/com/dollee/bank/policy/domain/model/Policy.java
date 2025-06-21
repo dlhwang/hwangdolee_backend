@@ -5,6 +5,8 @@ import com.dollee.bank.common.util.Ulid;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -37,6 +39,7 @@ public abstract class Policy implements Serializable {
   @Column(name = "policy_type", nullable = false, insertable = false, updatable = false)
   protected String policy_type;
 
+  @Enumerated(EnumType.STRING)
   @Column(name = "ledger_type", nullable = false)
   private LedgerType ledgerType;
 
