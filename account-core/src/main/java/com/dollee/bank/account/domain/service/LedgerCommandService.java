@@ -8,6 +8,7 @@ import com.dollee.bank.account.domain.model.LedgerFeeDetail;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.domain.repository.AccountRepository;
 import com.dollee.bank.account.domain.repository.LedgerRepository;
+import com.dollee.bank.common.enumtype.Cycle;
 import com.dollee.bank.policy.domain.model.LedgerFeePolicy;
 import com.dollee.bank.policy.domain.model.LedgerLimitPolicy;
 import com.dollee.bank.policy.domain.service.LedgerFeePolicyService;
@@ -48,6 +49,10 @@ public abstract class LedgerCommandService<T extends LedgerCommand> {
 
   private void validateLimit(LedgerType type, Account account, LedgerLimitPolicy policy,
       long amount) {
+    if (policy.getCycle() == Cycle.NONE) {
+      return;
+    }
+
     final long sumByCycle = repository.getSumByCycle(account.getAccountId(), policy.getCycle(),
         type);
     if (sumByCycle + amount > policy.getAmount()) {
