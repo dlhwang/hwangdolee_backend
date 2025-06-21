@@ -7,10 +7,11 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class DepositCommand extends LedgerCommand {
-  public DepositCommand(String accountNumber, LocalDateTime occurredAt, long amount,
+public class WithdrawCommand extends LedgerCommand {
+
+  public WithdrawCommand(String accountNumber, LocalDateTime occurredAt, long amount,
       String description,
       String executedBy) {
-    super(accountNumber, LedgerType.DEPOSIT, occurredAt, amount, description, executedBy);
+    super(accountNumber, LedgerType.WITHDRAWAL, occurredAt, amount, description, executedBy);
   }
 }
