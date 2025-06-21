@@ -16,7 +16,7 @@ public class TransferService {
 
   private final TransferCommandService transferService;
 
-  @DistributedLock(key = "'bank:account' + #save.getFromAccountNumberx()")
+  @DistributedLock(key = "'bank:account' + #save.getFromAccountNumber()")
   public TransferResponse save(TransferRequest.Transfer save) {
     return new TransferResponse(transferService.process(
         new TransferCommand(
