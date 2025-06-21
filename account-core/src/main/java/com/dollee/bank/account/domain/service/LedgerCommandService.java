@@ -31,7 +31,7 @@ public abstract class LedgerCommandService<T extends LedgerCommand> {
     final Account account = accountRepository.findByAccountNumberAndUserId(command.getLedgerType(),
         command.getAccountNumber(), command.getExecutedBy());
 
-    validateLimit(command.getLedgerType(), account, activeLimitPolicy);
+    validateLimit(command.getLedgerType(), account, activeLimitPolicy, command.getAmount());
 
     LedgerDetail ledgerDetail = LedgerDetail.newInstance(command.getLedgerType(),
         command.getOccurredAt(), command.getAmount(),
@@ -46,10 +46,11 @@ public abstract class LedgerCommandService<T extends LedgerCommand> {
         account.getAccountDetail(), feeDetail), account);
   }
 
-  private void validateLimit(LedgerType type, Account account, LedgerLimitPolicy policy) {
+  private void validateLimit(LedgerType type, Account account, LedgerLimitPolicy policy,
+      long amount) {
     final long sumByCycle = repository.getSumByCycle(account.getAccountId(), policy.getCycle(),
         type);
-    if (sumByCycle > policy.getAmount()) {
+    if (sumByCycle + amount > policy.getAmount()) {
       throw new IllegalArgumentException(getLimitExceededMessage(type, policy));
     }
   }
