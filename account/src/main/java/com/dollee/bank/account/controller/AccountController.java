@@ -2,12 +2,14 @@ package com.dollee.bank.account.controller;
 
 import com.dollee.bank.account.dto.AccountRequest;
 import com.dollee.bank.account.dto.AccountResponse;
+import com.dollee.bank.account.dto.AccountResponse.AccountVO;
 import com.dollee.bank.account.service.AccountService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,7 +28,7 @@ public class AccountController {
 
   private final AccountService service;
 
-  @GetMapping("/{accountId}")
+  @GetMapping("/{accountNumber}")
   @Operation(summary = "계좌 상세 조회", description = "계좌 하나를 조회합니다.")
   @ApiResponses({
       @ApiResponse(responseCode = "200", description = "OK"),
@@ -35,9 +37,9 @@ public class AccountController {
       @ApiResponse(responseCode = "404", description = "Not Found"),
       @ApiResponse(responseCode = "500", description = "Internal Server Error")
   })
-  public ResponseEntity<AccountResponse.AccountVO> getAccount(
-      @Parameter(description = "계좌의 아이디") @PathVariable String accountId) {
-    return ResponseEntity.ok(service.getAccount(accountId));
+  public ResponseEntity<List<AccountVO>> getAccount(
+      @Parameter(description = "계좌번호") @PathVariable String accountNumber) {
+    return ResponseEntity.ok(service.getAccountDetails(accountNumber));
   }
 
   @PostMapping
@@ -49,7 +51,7 @@ public class AccountController {
       @ApiResponse(responseCode = "404", description = "Not Found"),
       @ApiResponse(responseCode = "500", description = "Internal Server Error")
   })
-  public ResponseEntity<AccountResponse.AccountVO> post(
+  public ResponseEntity<AccountResponse.AccountSave> post(
       @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
           description = "계좌 등록 정보.")

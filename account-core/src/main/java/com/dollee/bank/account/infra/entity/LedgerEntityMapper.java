@@ -4,6 +4,7 @@ import com.dollee.bank.account.domain.model.AccountDetail;
 import com.dollee.bank.account.domain.model.Ledger;
 import com.dollee.bank.account.domain.model.LedgerDetail;
 import com.dollee.bank.account.domain.model.LedgerFeeDetail;
+import java.util.List;
 
 public class LedgerEntityMapper {
 
@@ -36,5 +37,9 @@ public class LedgerEntityMapper {
         entity.getAccountDetail(),
         entity.getLedgerFeeDetail()
     );
+  }
+
+  public static List<Ledger> toDomain(List<LedgerEntity> entities) {
+    return entities.stream().map(LedgerEntityMapper::toDomain).toList();
   }
 }

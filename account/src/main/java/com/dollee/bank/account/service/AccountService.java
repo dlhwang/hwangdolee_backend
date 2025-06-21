@@ -3,13 +3,16 @@ package com.dollee.bank.account.service;
 import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.domain.repository.AccountRepository;
+import com.dollee.bank.account.domain.repository.LedgerRepository;
 import com.dollee.bank.account.domain.service.AccountNumberGenerator;
 import com.dollee.bank.account.dto.AccountMapper;
 import com.dollee.bank.account.dto.AccountRequest.AccountSave;
+import com.dollee.bank.account.dto.AccountResponse;
 import com.dollee.bank.account.dto.AccountResponse.AccountVO;
 import com.dollee.bank.common.enumtype.BankCode;
 import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.util.Money;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +21,16 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 
   private final AccountRepository accountRepository;
+  private final LedgerRepository ledgerRepository;
   private final AccountNumberGenerator accountNumberGenerator;
 
   @Loggable
-  public AccountVO getAccount(String accountId) {
-    return AccountMapper.toResponse(accountRepository.findById(accountId));
+  public List<AccountVO> getAccountDetails(String accountNumber) {
+    return AccountMapper.toResponse(ledgerRepository.getLedgersByAccountNumber(accountNumber));
   }
 
   @Loggable
-  public AccountVO save(AccountSave save) {
+  public AccountResponse.AccountSave save(AccountSave save) {
     AccountNumber accountNumber = generateUniqueAccountNumber(BankCode.DOLLEE);
     return AccountMapper.toResponse(
         accountRepository.save(

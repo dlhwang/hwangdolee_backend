@@ -1,15 +1,19 @@
 package com.dollee.bank.account.domain.repository;
 
 import com.dollee.bank.account.domain.model.Account;
+import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.domain.model.Ledger;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
+import com.dollee.bank.account.infra.entity.AccountEntity;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.entity.LedgerEntityMapper;
+import com.dollee.bank.account.infra.repository.AccountJpaRepository;
 import com.dollee.bank.account.infra.repository.LedgerJpaRepository;
 import com.dollee.bank.common.enumtype.Cycle;
 import com.dollee.bank.common.exception.DataNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Repository;
 public class LedgerRepositoryImpl implements LedgerRepository {
 
   private final LedgerJpaRepository repository;
+  private final AccountJpaRepository accountJpaRepository;
 
   @Override
   public Ledger save(Ledger save, Account account) {
@@ -65,5 +70,13 @@ public class LedgerRepositoryImpl implements LedgerRepository {
 
     return Optional.of(repository.sumLedgerAmountBetween(accountId, ledgerType, start, end))
         .orElse(0L);
+  }
+
+  @Override
+  public List<Ledger> getLedgersByAccountNumber(String accountNumber) {
+    AccountEntity accountEntity = accountJpaRepository.findByAccountNumber(
+            AccountNumber.to(accountNumber))
+        .orElseThrow(() -> new DataNotFoundException("해당 계좌가 존재하지 않습니다."));
+    return LedgerEntityMapper.toDomain(repository.findAllByAccountOrderByLedgerDetail_OccurredAtDesc(accountEntity));
   }
 }
