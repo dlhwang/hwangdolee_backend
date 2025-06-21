@@ -2,6 +2,7 @@ package com.dollee.bank.account.domain.repository;
 
 import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.Ledger;
+import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.entity.LedgerEntityMapper;
 import com.dollee.bank.account.infra.repository.LedgerJpaRepository;
@@ -37,7 +38,7 @@ public class LedgerRepositoryImpl implements LedgerRepository {
   }
 
   @Override
-  public long getSumByCycle(String accountId, Cycle cycle) {
+  public long getSumByCycle(String accountId, Cycle cycle, LedgerType ledgerType) {
     if (cycle == Cycle.NONE) {
       return 0L;
     }
@@ -61,6 +62,6 @@ public class LedgerRepositoryImpl implements LedgerRepository {
       default -> throw new IllegalArgumentException("Unknown cycle");
     }
 
-    return repository.sumLedgerAmountBetween(accountId, start, end);
+    return repository.sumLedgerAmountBetween(accountId, ledgerType, start, end);
   }
 }

@@ -92,7 +92,7 @@ class LedgerServiceTest {
         LedgerFeeDetail.newInstance(LedgerFeePolicyDetail.newInstance(
             FeeType.없음, TruncateType.NO, 0f, 0L), 0));
 
-    when(ledgerRepository.getSumByCycle(any(), any())).thenReturn(0L);
+    when(ledgerRepository.getSumByCycle(any(), any(), any())).thenReturn(0L);
     when(ledgerRepository.save(any(), account)).thenReturn(expectedLedger);
 
     // when
@@ -136,7 +136,7 @@ class LedgerServiceTest {
         LedgerFeeDetail.newInstance(LedgerFeePolicyDetail.newInstance(
             FeeType.없음, TruncateType.NO, 0f, 0L), 0));
 
-    when(ledgerRepository.getSumByCycle(any(), any())).thenReturn(0L);
+    when(ledgerRepository.getSumByCycle(any(), any(), any())).thenReturn(0L);
     when(ledgerRepository.save(any(), account)).thenReturn(expectedLedger);
 
     // when

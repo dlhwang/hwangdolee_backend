@@ -47,7 +47,8 @@ public abstract class LedgerCommandService<T extends LedgerCommand> {
   }
 
   private void validateLimit(LedgerType type, Account account, LedgerLimitPolicy policy) {
-    final long sumByCycle = repository.getSumByCycle(account.getAccountId(), policy.getCycle());
+    final long sumByCycle = repository.getSumByCycle(account.getAccountId(), policy.getCycle(),
+        type);
     if (sumByCycle > policy.getAmount()) {
       throw new IllegalArgumentException(getLimitExceededMessage(type, policy));
     }

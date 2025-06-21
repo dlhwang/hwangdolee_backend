@@ -1,5 +1,6 @@
 package com.dollee.bank.account.infra.repository;
 
+import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.infra.entity.LedgerEntity;
 import java.time.LocalDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,8 +14,13 @@ public interface LedgerJpaRepository extends JpaRepository<LedgerEntity, String>
   @Query("""
         SELECT SUM(l.ledgerDetail.amount)
         FROM LedgerEntity l
-        WHERE l.accountId = :accountId AND l.ledgerDetail.occurredAt BETWEEN :start AND :end
+        WHERE l.accountId = :accountId
+        AND l.ledgerDetail.ledgerType = :type
+        AND l.ledgerDetail.occurredAt BETWEEN :start AND :end
       """)
-  long sumLedgerAmountBetween(@Param("accountId") String accountId,
-      @Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+  long sumLedgerAmountBetween(
+      @Param("accountId") String accountId,
+      @Param("type") LedgerType type,
+      @Param("start") LocalDateTime start,
+      @Param("end") LocalDateTime end);
 }

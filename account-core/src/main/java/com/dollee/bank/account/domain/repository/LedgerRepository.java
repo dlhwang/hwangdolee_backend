@@ -2,6 +2,7 @@ package com.dollee.bank.account.domain.repository;
 
 import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.Ledger;
+import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.common.enumtype.Cycle;
 
 public interface LedgerRepository {
@@ -10,5 +11,5 @@ public interface LedgerRepository {
 
   Ledger findById(String id);
 
-  long getSumByCycle(String accountId, Cycle cycle);
+  long getSumByCycle(String accountId, Cycle cycle, LedgerType ledgerType);
 }
