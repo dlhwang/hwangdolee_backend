@@ -43,7 +43,7 @@ Docker / Docker Compose
 ./gradlew clean bootJar
 ```
 
-멀티모듈이므로 account-app과 deposit-app의 .jar 파일이 각각 생성됩니다.
+멀티모듈이므로 각 모듈의 jar 파일이 각각 생성됩니다.
 
 2. Docker Compose 실행
 
