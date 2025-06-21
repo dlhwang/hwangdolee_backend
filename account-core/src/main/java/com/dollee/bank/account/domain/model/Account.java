@@ -33,7 +33,7 @@ public class Account {
   }
 
   public void decreaseBalance(Money amount) {
-    this.accountDetail = AccountDetail.decreaseBalance(accountDetail, amount);
+    this.accountDetail = accountDetail.decrease(amount);
   }
 
   public long getAmount() {

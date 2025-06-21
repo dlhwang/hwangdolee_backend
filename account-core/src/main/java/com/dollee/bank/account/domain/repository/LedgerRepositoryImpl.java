@@ -10,6 +10,7 @@ import com.dollee.bank.common.enumtype.Cycle;
 import com.dollee.bank.common.exception.DataNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -62,6 +63,7 @@ public class LedgerRepositoryImpl implements LedgerRepository {
       default -> throw new IllegalArgumentException("Unknown cycle");
     }
 
-    return repository.sumLedgerAmountBetween(accountId, ledgerType, start, end);
+    return Optional.of(repository.sumLedgerAmountBetween(accountId, ledgerType, start, end))
+        .orElse(0L);
   }
 }

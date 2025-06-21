@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface LedgerJpaRepository extends JpaRepository<LedgerEntity, String> {
 
   @Query("""
-        SELECT SUM(l.ledgerDetail.amount)
+        SELECT COALESCE(SUM(l.ledgerDetail.amount), 0)
         FROM LedgerEntity l
         WHERE l.accountId = :accountId
         AND l.ledgerDetail.ledgerType = :type

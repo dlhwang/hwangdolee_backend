@@ -1,5 +1,6 @@
 package com.dollee.bank.account.domain.model;
 
+import com.dollee.bank.common.exception.NotInvalidException;
 import com.dollee.bank.common.util.Money;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -29,18 +30,25 @@ public class AccountDetail {
         accountDetail.getUserId());
   }
 
-  protected static AccountDetail decreaseBalance(AccountDetail accountDetail, Money amount) {
-    return new AccountDetail(
-        accountDetail.getAccountNumber(),
-        Money.wons(accountDetail.getBalance()).minus(amount).longValue(),
-        accountDetail.getUserId());
-  }
-
   public long getAmount() {
     return balance;
   }
 
   public String getAccountNumberToString() {
     return accountNumber.getNumber();
+  }
+
+  public boolean canDecrease(Money amount) {
+    return Money.wons(this.balance).isGreaterThanOrEqual(amount);
+  }
+
+  protected AccountDetail decrease(Money amount) {
+    if (!canDecrease(amount)) {
+      throw new NotInvalidException("인출할 수 없습니다");
+    }
+    return new AccountDetail(
+        accountNumber,
+        Money.wons(balance).minus(amount).longValue(),
+        userId);
   }
 }
