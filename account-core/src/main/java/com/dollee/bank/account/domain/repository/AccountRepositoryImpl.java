@@ -2,12 +2,15 @@ package com.dollee.bank.account.domain.repository;
 
 import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.AccountNumber;
+import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.infra.entity.AccountEntity;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.repository.AccountJpaRepository;
 import com.dollee.bank.common.exception.DataNotFoundException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -17,8 +20,10 @@ public class AccountRepositoryImpl implements AccountRepository {
 
   @Override
   public Account save(Account save) {
-    return AccountEntityMapper.toDomain(
-        jpaRepository.save(AccountEntityMapper.toEntityForSave(save)));
+    AccountEntity entity = StringUtils.hasText(save.getAccountId())
+        ? AccountEntityMapper.toEntity(save)
+        : AccountEntityMapper.toEntityForSave(save);
+    return AccountEntityMapper.toDomain(jpaRepository.save(entity));
   }
 
   @Override
@@ -30,11 +35,18 @@ public class AccountRepositoryImpl implements AccountRepository {
   }
 
   @Override
-  public Account findByAccountNumber(String accountNumber) {
+  public Account findByAccountNumberAndUserId(LedgerType ledgerType, String accountNumber,
+      String userId) {
+    Optional<AccountEntity> entityOpt = switch (ledgerType) {
+      case DEPOSIT -> jpaRepository.findByAccountNumber(AccountNumber.to(accountNumber));
+      case WITHDRAWAL ->
+          jpaRepository.findByAccountNumberAndUserId(AccountNumber.to(accountNumber), userId);
+      default -> throw new IllegalStateException("Unexpected ledger type: " + ledgerType);
+    };
+
     return AccountEntityMapper.toDomain(
-        jpaRepository
-            .findByAccountNumber(AccountNumber.to(accountNumber))
-            .orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다.")));
+        entityOpt.orElseThrow(() -> new DataNotFoundException("존재하지 않은 계좌입니다."))
+    );
   }
 
   @Override

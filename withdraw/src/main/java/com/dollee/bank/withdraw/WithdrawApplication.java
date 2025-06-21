@@ -3,7 +3,14 @@ package com.dollee.bank.withdraw;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = {"com.dollee.bank.withdraw", "com.dollee.bank.common"})
+@SpringBootApplication(
+    scanBasePackages = {
+        "com.dollee.bank.account",
+        "com.dollee.bank.withdraw",
+        "com.dollee.bank.policy",
+        "com.dollee.bank.common",
+        "com.dollee.bank.config"
+    })
 public class WithdrawApplication {
   public static void main(String[] args) {
     try {

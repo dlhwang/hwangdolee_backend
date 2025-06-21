@@ -31,7 +31,7 @@ public class TransferController {
       @ApiResponse(responseCode = "404", description = "Not Found"),
       @ApiResponse(responseCode = "500", description = "Internal Server Error")
   })
-  public ResponseEntity<TransferResponse.TransferVO> post(
+  public ResponseEntity<TransferResponse> post(
       @io.swagger.v3.oas.annotations.parameters.RequestBody(
           required = true,
           description = "이체 정보.")

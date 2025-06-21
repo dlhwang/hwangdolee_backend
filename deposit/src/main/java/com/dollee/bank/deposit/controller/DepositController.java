@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "계좌 관리 v1", description = "계좌 관리 컨트롤러 입니다.")
+@Tag(name = "입금 관리 v1", description = "입금 관리 컨트롤러 입니다.")
 @RequestMapping("/api/dolleebank/account")
 @RequiredArgsConstructor
 public class DepositController {
