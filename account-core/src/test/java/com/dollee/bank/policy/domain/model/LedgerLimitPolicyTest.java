@@ -22,10 +22,11 @@ class LedgerLimitPolicyTest {
   }
 
   @Test
-  @DisplayName("TRANSFER 기본 제한 정책은 일별 3,000,000원 이다")
+  @DisplayName("TRANSFER_FROM 기본 제한 정책은 일별 3,000,000원 이다")
   void testCreateDefaultForTransfer() {
     LedgerLimitPolicy domain =
-        LedgerLimitPolicy.createDefault(LedgerType.TRANSFER, LocalDateTime.of(2025, 6, 18, 0, 0));
+        LedgerLimitPolicy.createDefault(LedgerType.TRANSFER_FROM,
+            LocalDateTime.of(2025, 6, 18, 0, 0));
 
     LedgerLimitPolicyDetail detail = domain.getLedgerLimitPolicyDetail();
 

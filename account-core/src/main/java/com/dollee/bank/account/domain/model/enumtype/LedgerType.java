@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum LedgerType {
   DEPOSIT("입금"),
   WITHDRAWAL("출금"),
-  TRANSFER("송금");
+  TRANSFER_FROM("송금"),
+  TRANSFER_TO("송금");
   private final String name;
 }

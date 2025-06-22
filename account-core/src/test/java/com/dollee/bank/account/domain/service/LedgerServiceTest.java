@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +16,7 @@ import com.dollee.bank.account.domain.model.AccountDetail;
 import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.domain.model.Ledger;
 import com.dollee.bank.account.domain.model.LedgerFeeDetail;
+import com.dollee.bank.account.domain.model.enumtype.LedgerType;
 import com.dollee.bank.account.domain.repository.AccountRepository;
 import com.dollee.bank.account.domain.repository.LedgerRepository;
 import com.dollee.bank.common.enumtype.Cycle;
@@ -93,7 +95,7 @@ class LedgerServiceTest {
             FeeType.없음, TruncateType.NO, 0f, 0L), 0));
 
     when(ledgerRepository.getSumByCycle(any(), any(), any())).thenReturn(0L);
-    when(ledgerRepository.save(any(), account)).thenReturn(expectedLedger);
+    when(ledgerRepository.save(any(), any())).thenReturn(expectedLedger);
 
     // when
     Ledger result = depositCommandService.process(command);
@@ -137,7 +139,7 @@ class LedgerServiceTest {
             FeeType.없음, TruncateType.NO, 0f, 0L), 0));
 
     when(ledgerRepository.getSumByCycle(any(), any(), any())).thenReturn(0L);
-    when(ledgerRepository.save(any(), account)).thenReturn(expectedLedger);
+    when(ledgerRepository.save(any(), any())).thenReturn(expectedLedger);
 
     // when
     Ledger result = withdrawCommandService.process(command);
@@ -161,17 +163,30 @@ class LedgerServiceTest {
         "system"
     );
 
-    WithdrawCommand withdrawCommand = command.getWithdraw();
-    DepositCommand depositCommand = command.getDeposit();
+    LedgerFeePolicy feePolicy = mock(LedgerFeePolicy.class);
+    LedgerLimitPolicy limitPolicy = mock(LedgerLimitPolicy.class);
+
+    Account fromAccount = mock(Account.class);
+    Account toAccount = mock(Account.class);
 
     Ledger withdrawLedger = mock(Ledger.class);
     Ledger depositLedger = mock(Ledger.class);
 
-    // 출금 서비스 Mock
-    when(withdrawCommandService.process(withdrawCommand)).thenReturn(withdrawLedger);
+    // 수수료 정책 Mock
+    when(feePolicyService.getActivePolicyOrDefault(any(), any())).thenReturn(feePolicy);
+    when(limitPolicyService.getActivePolicyOrDefault(any(), any())).thenReturn(limitPolicy);
+    when(limitPolicy.getCycle()).thenReturn(Cycle.DAILY);
+    when(limitPolicy.getAmount()).thenReturn(1_000_000L);
 
-    // 입금 서비스 Mock
-    when(depositCommandService.process(depositCommand)).thenReturn(depositLedger);
+    // 계좌 Mock
+    when(accountRepository.findByAccountNumberAndUserId(eq(LedgerType.WITHDRAWAL), any(), any()))
+        .thenReturn(fromAccount);
+    when(accountRepository.findByAccountNumberAndUserId(eq(LedgerType.DEPOSIT), any(), any()))
+        .thenReturn(toAccount);
+
+    // 저장 Mock
+    when(ledgerRepository.save(any(), eq(fromAccount))).thenReturn(withdrawLedger);
+    when(ledgerRepository.save(any(), eq(toAccount))).thenReturn(depositLedger);
 
     // when
     List<Ledger> result = transferCommandService.process(command);
@@ -179,7 +194,7 @@ class LedgerServiceTest {
     // then
     assertThat(result).containsExactly(withdrawLedger, depositLedger);
 
-    verify(withdrawCommandService).process(withdrawCommand);
-    verify(depositCommandService).process(depositCommand);
+    verify(accountRepository).saveAll(any());
+    verify(ledgerRepository, times(2)).save(any(), any());
   }
 }

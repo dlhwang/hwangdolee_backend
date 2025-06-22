@@ -11,10 +11,11 @@ import org.junit.jupiter.api.Test;
 
 class LedgerFeePolicyTest {
   @Test
-  @DisplayName("TRANSFER 기본 수수료 정책은 정율 1%, 절사 없음, 정액 0원이다")
+  @DisplayName("TRANSFER_FROM 기본 수수료 정책은 정율 1%, 절사 없음, 정액 0원이다")
   void testCreateDefaultForTransfer() {
     LedgerFeePolicy domain =
-        LedgerFeePolicy.createDefault(LedgerType.TRANSFER, LocalDateTime.of(2025, 6, 18, 0, 0));
+        LedgerFeePolicy.createDefault(LedgerType.TRANSFER_FROM,
+            LocalDateTime.of(2025, 6, 18, 0, 0));
 
     LedgerFeePolicyDetail detail = domain.getLedgerFeePolicyDetail();
 

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +37,11 @@ public class Account {
     this.accountDetail = accountDetail.decrease(amount);
   }
 
+  public void transferTo(Account target, Money amount) {
+    this.decreaseBalance(amount);
+    target.increaseBalance(amount);
+  }
+
   public long getAmount() {
     return accountDetail.getAmount();
   }
@@ -50,5 +56,9 @@ public class Account {
 
   public String getAccountNumberToString() {
     return accountDetail.getAccountNumberToString();
+  }
+
+  public boolean isNew() {
+    return !StringUtils.hasText(this.accountId);
   }
 }

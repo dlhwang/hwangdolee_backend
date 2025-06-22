@@ -9,7 +9,7 @@ public class DefaultLedgerLimitPolicyRegistry {
   private static final Map<LedgerType, LedgerLimitPolicyDetail> DEFAULT_POLICIES =
       Map.of(
           LedgerType.WITHDRAWAL, LedgerLimitPolicyDetail.newInstance(Cycle.DAILY, 1_000_000L),
-          LedgerType.TRANSFER, LedgerLimitPolicyDetail.newInstance(Cycle.DAILY, 3_000_000L));
+          LedgerType.TRANSFER_FROM, LedgerLimitPolicyDetail.newInstance(Cycle.DAILY, 3_000_000L));
 
   public static LedgerLimitPolicyDetail getDefault(LedgerType type) {
     return DEFAULT_POLICIES.getOrDefault(type, LedgerLimitPolicyDetail.newInstance(Cycle.NONE, 0L));

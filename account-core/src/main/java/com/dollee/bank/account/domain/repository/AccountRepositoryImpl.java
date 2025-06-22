@@ -7,10 +7,10 @@ import com.dollee.bank.account.infra.entity.AccountEntity;
 import com.dollee.bank.account.infra.entity.AccountEntityMapper;
 import com.dollee.bank.account.infra.repository.AccountJpaRepository;
 import com.dollee.bank.common.exception.DataNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,12 +19,22 @@ public class AccountRepositoryImpl implements AccountRepository {
   private final AccountJpaRepository jpaRepository;
 
   @Override
-  public Account save(Account save) {
-    AccountEntity entity = StringUtils.hasText(save.getAccountId())
-        ? AccountEntityMapper.toEntity(save)
-        : AccountEntityMapper.toEntityForSave(save);
+  public Account save(Account account) {
+    if (!account.isNew()) {
+      return update(account);
+    }
+    AccountEntity entity = AccountEntityMapper.toEntity(account);
     return AccountEntityMapper.toDomain(jpaRepository.save(entity));
   }
+
+  public Account update(Account account) {
+    if (account.isNew()) {
+      throw new IllegalArgumentException("Use save() for new accounts");
+    }
+    AccountEntity entity = AccountEntityMapper.toEntity(account);
+    return AccountEntityMapper.toDomain(jpaRepository.save(entity));
+  }
+
 
   @Override
   public Account findById(String accountId) {
@@ -61,5 +71,11 @@ public class AccountRepositoryImpl implements AccountRepository {
   @Override
   public boolean existsByAccountNumber(AccountNumber candidate) {
     return jpaRepository.existsByAccountNumber(candidate);
+  }
+
+  @Override
+  public List<Account> saveAll(List<Account> accounts) {
+    return AccountEntityMapper.toDomain(
+        jpaRepository.saveAll(AccountEntityMapper.toEntity(accounts)));
   }
 }

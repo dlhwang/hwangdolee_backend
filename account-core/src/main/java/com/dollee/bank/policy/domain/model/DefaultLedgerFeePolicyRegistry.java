@@ -9,7 +9,7 @@ public class DefaultLedgerFeePolicyRegistry {
 
   private static final Map<LedgerType, LedgerFeePolicyDetail> DEFAULT_POLICIES =
       Map.of(
-          LedgerType.TRANSFER,
+          LedgerType.TRANSFER_FROM,
           LedgerFeePolicyDetail.newInstance(FeeType.정율, TruncateType.NO, 0.01f, 0L));
 
   public static LedgerFeePolicyDetail getDefault(LedgerType type) {

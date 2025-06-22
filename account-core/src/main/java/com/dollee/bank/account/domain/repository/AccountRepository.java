@@ -3,6 +3,7 @@ package com.dollee.bank.account.domain.repository;
 import com.dollee.bank.account.domain.model.Account;
 import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.account.domain.model.enumtype.LedgerType;
+import java.util.List;
 
 public interface AccountRepository {
   Account save(Account save);
@@ -14,4 +15,6 @@ public interface AccountRepository {
   void delete(String accountId);
 
   boolean existsByAccountNumber(AccountNumber candidate);
+
+  List<Account> saveAll(List<Account> accounts);
 }
