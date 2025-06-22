@@ -2,6 +2,7 @@ package com.dollee.bank.transfer.service;
 
 import com.dollee.bank.account.domain.command.TransferCommand;
 import com.dollee.bank.account.domain.service.TransferCommandService;
+import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.redis.DistributedLock;
 import com.dollee.bank.transfer.dto.TransferMapper;
 import com.dollee.bank.transfer.dto.TransferRequest;
@@ -16,6 +17,7 @@ public class TransferService {
 
   private final TransferCommandService transferService;
 
+  @Loggable
   @DistributedLock(key = "'bank:account' + #save.getFromAccountNumber()")
   public TransferResponse save(TransferRequest.Transfer save) {
     return new TransferResponse(transferService.process(

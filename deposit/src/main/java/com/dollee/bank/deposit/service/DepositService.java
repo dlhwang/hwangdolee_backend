@@ -2,6 +2,7 @@ package com.dollee.bank.deposit.service;
 
 import com.dollee.bank.account.domain.command.DepositCommand;
 import com.dollee.bank.account.domain.service.DepositCommandService;
+import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.redis.DistributedLock;
 import com.dollee.bank.deposit.dto.DepositMapper;
 import com.dollee.bank.deposit.dto.DepositRequest.DepositSave;
@@ -16,6 +17,7 @@ public class DepositService {
 
   private final DepositCommandService domainService;
 
+  @Loggable
   @DistributedLock(key = "'bank:account' + #save.getAccountNumber()")
   public DepositVO deposit(DepositSave save) {
     return DepositMapper.toResponse(

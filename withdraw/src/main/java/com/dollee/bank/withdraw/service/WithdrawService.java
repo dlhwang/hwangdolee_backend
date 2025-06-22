@@ -2,6 +2,7 @@ package com.dollee.bank.withdraw.service;
 
 import com.dollee.bank.account.domain.command.WithdrawCommand;
 import com.dollee.bank.account.domain.service.WithdrawCommandService;
+import com.dollee.bank.common.logging.Loggable;
 import com.dollee.bank.common.redis.DistributedLock;
 import com.dollee.bank.withdraw.dto.WithdrawMapper;
 import com.dollee.bank.withdraw.dto.WithdrawRequest.Withdraw;
@@ -16,6 +17,7 @@ public class WithdrawService {
 
   private final WithdrawCommandService withdrawCommandService;
 
+  @Loggable
   @DistributedLock(key = "'bank:account' + #save.getAccountNumber()")
   public WithdrawVO save(Withdraw save) {
     return WithdrawMapper.toResponse(
