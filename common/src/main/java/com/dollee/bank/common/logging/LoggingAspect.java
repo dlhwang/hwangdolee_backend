@@ -1,6 +1,9 @@
 package com.dollee.bank.common.logging;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,15 +40,27 @@ public class LoggingAspect {
     return result;
   }
 
-  private String getJson(Object... args) {
+  private String getJson(Object[] args) {
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     // JSON으로 인자 직렬화
     String argumentsJson;
     try {
       argumentsJson = objectMapper.writeValueAsString(args);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (JsonProcessingException e) {
       argumentsJson = Arrays.toString(args); // fallback
     }
     return argumentsJson;
+  }
+
+  private String getJson(Object args) {
+    objectMapper.registerModule(new JavaTimeModule());
+    objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    try {
+      return objectMapper.writeValueAsString(args);
+    } catch (JsonProcessingException e) {
+      log.warn("Failed to serialize object to JSON", e);
+      return String.valueOf(args);
+    }
   }
 }
