@@ -1,15 +1,15 @@
-plugins {
-    id 'java'
+bootJar {
+    enabled = true
+    archiveBaseName = 'deposit'
+    archiveFileName = 'deposit.jar'
+    archiveVersion = '0.0.1'
 }
-
-group = 'com.dollee.bank'
-version = '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+jar {
+    enabled = false
 }
-
 dependencies {
+    implementation project(':common')
+    implementation project(':account-core')
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

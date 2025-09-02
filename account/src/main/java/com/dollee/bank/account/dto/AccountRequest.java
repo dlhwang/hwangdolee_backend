@@ -1,8 +1,6 @@
 package com.dollee.bank.account.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.HashSet;
-import java.util.stream.Collectors;
 import lombok.Data;
 
 public class AccountRequest {
@@ -18,5 +16,4 @@ public class AccountRequest {
     String userId;
     long balance;
   }
-
 }

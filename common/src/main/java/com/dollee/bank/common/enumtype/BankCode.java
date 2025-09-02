@@ -6,9 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum BankCode {
-
-  DOLLEE("8888")
-  , SOMEBANK("9999");
+  DOLLEE("8888"),
+  SOMEBANK("9999");
 
   private final String code;
 }

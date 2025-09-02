@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Qualifier("random")
-public class RandomAccountNumberGenerator implements AccountNumberGenerator{
+public class RandomAccountNumberGenerator implements AccountNumberGenerator {
   private static final Random RANDOM = new Random();
 
   @Override

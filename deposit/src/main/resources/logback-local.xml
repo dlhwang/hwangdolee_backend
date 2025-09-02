@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="CONSOLE">
+    <!--@Formatter:off-->
+        <encoder>
+            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %X{traceId} [%cyan(%logger{0}:%line)] -- %msg%n</pattern>
+        </encoder>
+        <!--@Formatter:on-->
+  </appender>
+
+  <logger additivity="false" level="error" name="org.springframework"/>
+  <logger additivity="false" level="error" name="org.apache"/>
+  <logger additivity="false" level="error" name="com.zaxxer"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
+</configuration>

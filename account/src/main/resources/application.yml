@@ -3,7 +3,8 @@ server:
 
 spring:
   profiles:
-    active: local
+    #    active: local
+    active: docker
 
   jackson:
     serialization:

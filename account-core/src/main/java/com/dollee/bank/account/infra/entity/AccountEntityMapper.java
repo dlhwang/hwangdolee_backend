@@ -1,8 +1,8 @@
 package com.dollee.bank.account.infra.entity;
 
 import com.dollee.bank.account.domain.model.Account;
-import com.dollee.bank.account.domain.model.AccountNumber;
 import com.dollee.bank.common.util.Money;
+import java.util.List;
 
 public class AccountEntityMapper {
 
@@ -31,4 +31,5 @@ public class AccountEntityMapper {
             entity.getUserId()
         );
     }
+
 }

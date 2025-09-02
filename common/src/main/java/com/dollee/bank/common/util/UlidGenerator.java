@@ -1,12 +1,10 @@
 package com.dollee.bank.common.util;
 
-import org.hibernate.engine.spi.SharedSessionContractImplementor;
-import org.hibernate.id.IdentifierGenerator;
-
+import de.huxhorn.sulky.ulid.ULID;
 import java.io.Serial;
 import java.io.Serializable;
-
-import de.huxhorn.sulky.ulid.ULID;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
 
 public class UlidGenerator implements IdentifierGenerator, Serializable {
 
