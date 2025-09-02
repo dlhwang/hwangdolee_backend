@@ -6,5 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class DataResponse<T> extends ErrorResponse {
+
   T result;
+
 }
